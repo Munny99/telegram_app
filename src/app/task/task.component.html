@@ -1,1 +1,153 @@
-<p>task works!</p>
+<div class="min-h-screen bg-dark text-white">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="profile-section">
+        <div class="icon-box">
+          <i class="bi bi-camera-video-fill"></i>
+        </div>
+        <div>
+          <h1 class="user-name">Fatema Akter</h1>
+          <div class="verified">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>Verified Expert</span>
+          </div>
+        </div>
+      </div>
+      <div class="balance-badge">
+        <span>💰</span>
+        <span>50.00 TAKA</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="card">
+        <div class="icon blue"><i class="bi bi-star-fill"></i></div>
+        <div>
+          <p class="value">4.9</p>
+          <p class="label">Rating</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon purple"><i class="bi bi-camera-reels-fill"></i></div>
+        <div>
+          <p class="value">500+</p>
+          <p class="label">Sessions</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon green"><i class="bi bi-award-fill"></i></div>
+        <div>
+          <p class="value">Top 10</p>
+          <p class="label">Expert</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call History -->
+    <div class="call-history">
+      <div class="call-header">
+        <h2>ফোনিক টাস্ক থেকেন</h2>
+        <span>0 / 15</span>
+      </div>
+      <div class="call-box">
+        <i class="bi bi-clock-history"></i>
+        <p>আজ ১টি টাস্ক বাকি আছে</p>
+      </div>
+    </div>
+
+    <!-- Main Call Card -->
+    <div class="call-card">
+      <div class="content">
+        <div class="circle">
+          <i class="bi bi-camera-video-fill"></i>
+        </div>
+        <h2>ভিডিওফোন দেখুন</h2>
+        <p>প্রতি ভিডিওফোন দেখে 50.00 TAKA আয় করুন</p>
+        <div class="earning">
+          <span>💵 বিগজারাড:</span>
+          <strong>50.00 TAKA</strong>
+        </div>
+        <button class="main-btn">
+          <i class="bi bi-telephone-fill"></i> ভিডিওফোন দেখুন
+        </button>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon blue"><i class="bi bi-camera-video"></i></div>
+        <h3>HD Video Quality</h3>
+        <p>Crystal clear video calls with stable connection</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon purple"><i class="bi bi-clock-history"></i></div>
+        <h3>24/7 Availability</h3>
+        <p>Connect anytime, anywhere at your convenience</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon green"><i class="bi bi-cash-stack"></i></div>
+        <h3>Instant Earnings</h3>
+        <p>Get paid immediately after each session</p>
+      </div>
+    </div>
+
+    <!-- Telegram Channels -->
+    <div class="telegram-section">
+      <div *ngFor="let channel of telegramChannels; let i = index" class="telegram-card">
+        <div class="telegram-content">
+          <div class="telegram-icon">
+            <i class="bi bi-telegram"></i>
+          </div>
+
+          <h3>টেলিগ্রাম চ্যানেল জয়েন দিন</h3>
+          <p>চ্যানেলে জয়েন করুন তারপর ৩ দিন<br />রইবেন ক্লিক করুন</p>
+
+          <div class="reward">
+            <span>🎁</span>
+            <span>বিগঝারাড: 200.00 TAKA</span>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-secondary">
+              <i class="bi bi-box-arrow-up-right"></i> চ্যানেল এন্টার
+            </button>
+            <button class="btn-primary">
+              <i class="bi bi-patch-check-fill"></i> দেখ ৩ দৈদিন
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button [ngClass]="{'active': activeTab === 'home'}" (click)="setActiveTab('home')">
+      <i class="bi bi-house-door-fill"></i>
+      <span>হোম</span>
+    </button>
+    <button [ngClass]="{'active': activeTab === 'tasks'}" (click)="setActiveTab('tasks')">
+      <i class="bi bi-list-task"></i>
+      <span>টাস্ক</span>
+    </button>
+    <button [ngClass]="{'active': activeTab === 'earnings'}" (click)="setActiveTab('earnings')">
+      <i class="bi bi-cash-stack"></i>
+      <span>উপার্জন</span>
+    </button>
+    <button [ngClass]="{'active': activeTab === 'history'}" (click)="setActiveTab('history')">
+      <i class="bi bi-clock-history"></i>
+      <span>রিপোর্ট</span>
+    </button>
+  </nav>
+</div>

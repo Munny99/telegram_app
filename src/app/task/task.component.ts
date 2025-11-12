@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class TaskComponent {
 
+ activeTab: string = 'home';
+  telegramChannels = Array(15).fill(0);
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
 }
