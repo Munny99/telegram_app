@@ -54,7 +54,7 @@
     <!-- Call History -->
     <div class="call-history">
       <div class="call-header">
-        <h2>ফোনিক টাস্ক থেকেন</h2>
+        <h2>দৈনিক টাস্ক অগ্রগতি</h2>
         <span>0 / 15</span>
       </div>
       <div class="call-box">
@@ -69,14 +69,14 @@
         <div class="circle">
           <i class="bi bi-camera-video-fill"></i>
         </div>
-        <h2>ভিডিওফোন দেখুন</h2>
-        <p>প্রতি ভিডিওফোন দেখে 50.00 TAKA আয় করুন</p>
+        <h2>বিজ্ঞাপন দেখুন</h2>
+        <p>প্রতি বিজ্ঞাপন দেখে 50.00 TAKA আয় করুন</p>
         <div class="earning">
-          <span>💵 বিগজারাড:</span>
+          <span>💵 রিওয়ার্ড:</span>
           <strong>50.00 TAKA</strong>
         </div>
         <button class="main-btn">
-          <i class="bi bi-telephone-fill"></i> ভিডিওফোন দেখুন
+          <i class="bi bi-telephone-fill"></i> বিজ্ঞাপন দেখুন
         </button>
       </div>
     </div>
@@ -111,19 +111,19 @@
           </div>
 
           <h3>টেলিগ্রাম চ্যানেল জয়েন দিন</h3>
-          <p>চ্যানেলে জয়েন করুন তারপর ৩ দিন<br />রইবেন ক্লিক করুন</p>
+          <p>চ্যানেলে জয়েন করুন তারপর <br />চেক ও ক্লেইম বাটনে ক্লিক করুন</p>
 
           <div class="reward">
             <span>🎁</span>
-            <span>বিগঝারাড: 200.00 TAKA</span>
+            <span>রিওয়ার্ড: 200.00 TAKA</span>
           </div>
 
           <div class="button-group">
             <button class="btn-secondary">
-              <i class="bi bi-box-arrow-up-right"></i> চ্যানেল এন্টার
+              <i class="bi bi-box-arrow-up-right"></i> চ্যানেল প্রবেশ
             </button>
             <button class="btn-primary">
-              <i class="bi bi-patch-check-fill"></i> দেখ ৩ দৈদিন
+              <i class="bi bi-patch-check-fill"></i> চেক ও ক্লেইম
             </button>
           </div>
         </div>
@@ -131,23 +131,41 @@
     </div>
   </main>
 
+    <!-- Stats -->
+  <div class="task-card">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-clock text-sky-400 text-2xl"></i>
+        <div>
+          <p class="text-sky-200 text-sm">আজকে সম্পন্ন</p>
+          <p class="text-2xl font-bold">{{ totalCompleted }} টাস্ক</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-sky-200 text-sm">মোট আয়</p>
+        <p class="text-2xl font-bold text-green-400">{{ totalEarnings }} ৳</p>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <button [ngClass]="{'active': activeTab === 'home'}" (click)="setActiveTab('home')">
       <i class="bi bi-house-door-fill"></i>
-      <span>হোম</span>
+      <span routerLink="/home">হোম</span>
     </button>
     <button [ngClass]="{'active': activeTab === 'tasks'}" (click)="setActiveTab('tasks')">
       <i class="bi bi-list-task"></i>
-      <span>টাস্ক</span>
+      <span routerLink="/task">টাস্ক</span>
     </button>
     <button [ngClass]="{'active': activeTab === 'earnings'}" (click)="setActiveTab('earnings')">
       <i class="bi bi-cash-stack"></i>
-      <span>উপার্জন</span>
+      <span routerLink="/withdraw">উপার্জন</span>
     </button>
     <button [ngClass]="{'active': activeTab === 'history'}" (click)="setActiveTab('history')">
       <i class="bi bi-clock-history"></i>
-      <span>রিপোর্ট</span>
+      <span routerLink="/history">রিপোর্ট</span>
     </button>
   </nav>
 </div>

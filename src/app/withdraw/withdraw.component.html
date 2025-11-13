@@ -1,0 +1,83 @@
+<!-- <div class="wallet-container"> -->
+  <!-- Header -->
+  <!-- <div class="header">
+    <div class="user-info">
+      <div class="avatar">FA</div>
+      <div>
+        <h2>{{ user.name }}
+          <span *ngIf="user.verified" class="verified">✔</span>
+        </h2>
+        <p>রেফারেন: {{ user.referrals }} জন</p>
+      </div>
+    </div>
+    <div class="balance-card">
+      <div class="balance-label">আপনার ব্যালেন্স</div>
+      <div class="balance-amount">{{ user.balance | number:'1.2-2' }} <span>TAKA</span></div>
+      <div class="balance-actions">
+        <button>Add Money</button>
+        <button class="outline">Send</button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Dhaka Deal -->
+  <!-- <div class="deal-card">
+    <div class="deal-header">{{ dhakaDeal.title }}</div>
+    <div class="deal-body">
+      <div class="deal-item">
+        <p>নূন্যতম উত্তোলনেযোগ্য Amount</p>
+        <h3>{{ dhakaDeal.minAmount }} <span>TAKA</span></h3>
+      </div>
+      <div class="deal-item">
+        <p>মোট জন রেফারেলের প্রয়োজন</p>
+        <h3>{{ dhakaDeal.totalReferrals }} <span>জন</span></h3>
+      </div>
+      <button class="deal-btn">{{ dhakaDeal.status }}</button>
+    </div>
+  </div>
+
+  Withdraw Form
+  <form  (ngSubmit)="handleWithdraw()" class="withdraw-form">
+
+  <label>পদ্ধতি নির্বাচন করুন</label>
+  <select formControlName="method"
+          [ngClass]="{'invalid': withdrawForm.get('method')?.invalid && withdrawForm.get('method')?.touched}">
+    <option value="">একটি পদ্ধতি নির্বাচন করুন</option>
+    <option *ngFor="let m of paymentMethods" [value]="m">{{ m }}</option>
+  </select>
+  <small *ngIf="withdrawForm.get('method')?.invalid && withdrawForm.get('method')?.touched" class="error-text">
+    ⚠️ একটি পদ্ধতি নির্বাচন করুন
+  </small>
+
+  <label>একাউন্ট নম্বর</label>
+  <input formControlName="accountNumber" type="text" placeholder="01XXXXXXXXX"
+         [ngClass]="{'invalid': withdrawForm.get('accountNumber')?.invalid && withdrawForm.get('accountNumber')?.touched}" />
+  <small *ngIf="withdrawForm.get('accountNumber')?.errors?.['required'] && withdrawForm.get('accountNumber')?.touched" class="error-text">
+    ⚠️ একাউন্ট নম্বর দিন
+  </small>
+  <small *ngIf="withdrawForm.get('accountNumber')?.errors?.['pattern'] && withdrawForm.get('accountNumber')?.touched" class="error-text">
+    ⚠️ সঠিক মোবাইল নম্বর দিন (যেমনঃ 01XXXXXXXXX)
+  </small>
+
+  <label>Amount (TAKA)</label>
+  <input formControlName="amount" type="number" placeholder="নূন্যতম 1200.00 TAKA"
+         [ngClass]="{'invalid': withdrawForm.get('amount')?.invalid && withdrawForm.get('amount')?.touched}" />
+  <small *ngIf="withdrawForm.get('amount')?.errors?.['required'] && withdrawForm.get('amount')?.touched" class="error-text">
+    ⚠️ পরিমাণ লিখুন
+  </small>
+  <small *ngIf="withdrawForm.get('amount')?.errors?.['min'] && withdrawForm.get('amount')?.touched" class="error-text">
+    ⚠️ নূন্যতম পরিমাণ 1200 TAKA হতে হবে
+  </small>
+
+  <button type="submit" class="submit-btn">উত্তোলন অনুরোধ পাঠান</button>
+</form> -->
+
+
+  <!-- Bottom Navigation -->
+  <!-- <div class="bottom-nav">
+    <button [class.active]="activeTab === 'home'" (click)="setActive('home')">হোম</button>
+    <button [class.active]="activeTab === 'tasks'" (click)="setActive('tasks')">টাস্ক</button>
+    <button [class.active]="activeTab === 'wallet'" (click)="setActive('wallet')">উত্তোলন</button>
+    <button [class.active]="activeTab === 'history'" (click)="setActive('history')">হিস্টরি</button>
+  </div>
+</div> -->
