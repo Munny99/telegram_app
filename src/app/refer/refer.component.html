@@ -1,27 +1,149 @@
 <div class="refer-page">
-  <h1>💌 Invite & Earn</h1>
-  <p>আপনার বন্ধুদের Telegram-এ Invite করুন এবং বোনাস পান!</p>
-
-  <div class="referral-box">
-    <div class="code">{{ referralCode }}</div>
-    <button (click)="copyReferral()">
-      {{ copied ? 'Copied ✅' : 'Copy Code' }}
-    </button>
+  <!-- Confetti Animation -->
+  <div class="confetti-container" *ngIf="showConfetti">
+    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"></div>
   </div>
 
-  <div class="share-links">
-    <h3>Share via:</h3>
-    <a href="https://t.me/share/url?url=https://yourapp.com&text=Join%20using%20my%20referral%20code%20{{referralCode}}" target="_blank">
-      Telegram
-    </a>
-    <a href="mailto:?subject=Join%20App&body=Use%20my%20referral%20code%20{{referralCode}}" target="_blank">
-      Email
-    </a>
+  <!-- Header Section -->
+  <div class="header-section" @fadeIn>
+    <div class="header-icon">🎉</div>
+    <h1>Invite & Earn</h1>
+    <p class="subtitle">বন্ধুদের invite করুন এবং প্রতিটি সফল রেফারেলে ৳১০০ টাকা পান!</p>
   </div>
 
-  <div class="earnings">
-    <h3>আপনার রেফারেল আয়</h3>
-    <p>৳ 0.00 TAKA (শুরু হয়নি)</p>
+  <!-- Stats Cards -->
+  <div class="stats-grid" @fadeIn>
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ stats.totalReferrals }}</div>
+        <div class="stat-label">মোট রেফারেল</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ stats.activeReferrals }}</div>
+        <div class="stat-label">সক্রিয় রেফারেল</div>
+      </div>
+    </div>
+
+    <div class="stat-card highlight">
+      <div class="stat-icon">💰</div>
+      <div class="stat-content">
+        <div class="stat-value">৳{{ stats.totalEarnings.toFixed(2) }}</div>
+        <div class="stat-label">মোট আয়</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-content">
+        <div class="stat-value">৳{{ stats.pendingEarnings.toFixed(2) }}</div>
+        <div class="stat-label">অপেক্ষমাণ আয়</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Referral Code Section -->
+  <div class="referral-section" @scaleIn>
+    <h2>আপনার রেফারেল কোড</h2>
+    <div class="referral-box">
+      <div class="code-display">
+        <span class="code-label">কোড:</span>
+        <span class="code-value">{{ referralCode }}</span>
+      </div>
+      <button class="copy-btn" (click)="copyReferral()" [class.copied]="copied">
+        <span class="btn-icon">{{ copied ? '✅' : '📋' }}</span>
+        <span class="btn-text">{{ copied ? 'Copied!' : 'Copy Code' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Share Section -->
+  <div class="share-section" @fadeIn>
+    <h2>শেয়ার করুন</h2>
+    <div class="share-grid">
+      <button
+        *ngFor="let option of shareOptions; trackBy: trackByIndex"
+        class="share-btn"
+        [style.--btn-color]="option.color"
+        (click)="shareVia(option)">
+        <span class="share-icon">{{ option.icon }}</span>
+        <span class="share-name">{{ option.name }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Rewards Section -->
+  <div class="rewards-section" @fadeIn>
+    <h2>🎁 রিওয়ার্ড মাইলস্টোন</h2>
+    <div class="rewards-grid">
+      <div class="reward-card" *ngFor="let reward of rewards; trackBy: trackByIndex">
+        <div class="reward-icon">{{ reward.icon }}</div>
+        <div class="reward-content">
+          <h3>{{ reward.title }}</h3>
+          <p class="reward-description">{{ reward.description }}</p>
+          <div class="reward-amount">৳{{ reward.amount }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Referral History -->
+  <div class="history-section" @slideIn>
+    <div class="section-header">
+      <h2>সাম্প্রতিক রেফারেল</h2>
+      <a href="#" class="view-all">সব দেখুন →</a>
+    </div>
+
+    <div class="history-list">
+      <div class="history-item" *ngFor="let item of referralHistory; trackBy: trackByIndex">
+        <div class="history-avatar">
+          <span>{{ item.name.charAt(0) }}</span>
+        </div>
+        <div class="history-details">
+          <div class="history-name">{{ item.name }}</div>
+          <div class="history-date">{{ formatDate(item.date) }}</div>
+        </div>
+        <div class="history-status">
+          <span class="status-badge" [ngClass]="getStatusClass(item.status)">
+            {{ getStatusText(item.status) }}
+          </span>
+          <div class="history-earnings">৳{{ item.earnings }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="how-it-works" @fadeIn>
+    <h2>কিভাবে কাজ করে?</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>শেয়ার করুন</h3>
+          <p>আপনার রেফারেল কোড বন্ধুদের সাথে শেয়ার করুন</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>সাইন আপ</h3>
+          <p>আপনার বন্ধু কোড ব্যবহার করে সাইন আপ করবে</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>আয় করুন</h3>
+          <p>প্রতিটি সফল রেফারেলে বোনাস পান</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
