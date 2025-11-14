@@ -1,55 +1,97 @@
 import { Component } from '@angular/core';
 
+interface Transaction {
+  id: number;
+  type: string;
+  amount: string;
+  date: string;
+  status: string;
+}
+
+interface Stat {
+  label: string;
+  value: string;
+  icon: string;
+  color: string;
+}
+
 @Component({
   selector: 'app-withdraw',
   templateUrl: './withdraw.component.html',
   styleUrl: './withdraw.component.scss'
 })
 export class WithdrawComponent {
-handleWithdraw() {
-throw new Error('Method not implemented.');
-}
+  selectedMethod: string = '';
+  accountNumber: string = '';
+  amount: string = '1200.00';
+  balance: string = '50.00';
 
- activeTab: string = 'wallet';
-
-  user = {
-    name: 'Fatema Akter',
-    verified: true,
-    balance: 50.00,
-    referrals: 0
-  };
-
-  dhakaDeal = {
-    title: 'ঢাকা উত্তোলন',
-    minAmount: 1200.00,
-    totalReferrals: 18,
-    status: 'পণ্যটি বিদ্যমান করুন'
-  };
-
-  paymentMethods = [
+  withdrawalMethods: string[] = [
     'একটি পদ্ধতি নির্বাচন করুন',
     'বিকাশ',
     'নগদ',
     'রকেট',
-    'উপায়'
+    'উপায়',
   ];
-withdrawForm: any;
 
+  recentTransactions: Transaction[] = [
+    {
+      id: 1,
+      type: 'Withdrawal',
+      amount: '500 TAKA',
+      date: 'Nov 10, 2025',
+      status: 'Completed'
+    },
+    {
+      id: 2,
+      type: 'Withdrawal',
+      amount: '300 TAKA',
+      date: 'Nov 08, 2025',
+      status: 'Pending'
+    },
+  ];
 
+  stats: Stat[] = [
+    {
+      label: 'Total Withdrawn',
+      value: '5,800 ৳',
+      icon: 'trending-up',
+      color: 'green'
+    },
+    {
+      label: 'Pending',
+      value: '300 ৳',
+      icon: 'clock',
+      color: 'yellow'
+    },
+    {
+      label: 'Referrals',
+      value: '18 জন',
+      icon: 'user',
+      color: 'blue'
+    },
+  ];
 
-  // handleWithdraw(): void {
-  //   if (this.withdrawForm.valid) {
-  //     const { method, accountNumber, amount } = this.withdrawForm.value;
-  //     alert(`✅ উত্তোলন সফল হয়েছে!\n\nপদ্ধতি: ${method}\nএকাউন্ট: ${accountNumber}\nপরিমাণ: ${amount} TAKA`);
-  //     this.withdrawForm.reset();
-  //   } else {
-  //     Object.values(this.withdrawForm.controls).forEach(control => {
-  //       control.markAsTouched(); // error দেখাবে
-  //     });
-  //   }
-  // }
+  handleSubmit(): void {
+    if (!this.selectedMethod || this.selectedMethod === 'একটি পদ্ধতি নির্বাচন করুন') {
+      alert('অনুগ্রহ করে একটি পদ্ধতি নির্বাচন করুন');
+      return;
+    }
 
-  setActive(tab: string): void {
-    this.activeTab = tab;
+    if (!this.accountNumber) {
+      alert('অনুগ্রহ করে একাউন্ট নম্বর দিন');
+      return;
+    }
+
+    alert('রিকোয়েস্ট জমা দিন - Withdrawal request submitted!');
+  }
+
+  getStatusClass(status: string): string {
+    return status === 'Completed' ? 'status-completed' : 'status-pending';
+  }
+
+  getStatColorClass(color: string): string {
+    return `stat-${color}`;
   }
 }
+

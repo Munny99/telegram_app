@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { SupportComponent } from './support/support.component';
 import { TaskComponent } from './task/task.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
+import { ReferComponent } from './refer/refer.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
     HomeComponent,
     SupportComponent,
     TaskComponent,
-    WithdrawComponent
+    WithdrawComponent,
+    ReferComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
