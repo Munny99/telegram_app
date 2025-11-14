@@ -11,6 +11,8 @@ const routes: Routes = [
    {path:'support',component:SupportComponent},
    {path:'task',component:TaskComponent},
    {path:'withdraw',component:WithdrawComponent},
+  // { path: 'refer', component: ReferComponent },
+  // { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({

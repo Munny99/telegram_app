@@ -1,15 +1,17 @@
-<div class="container">
+<div class="home-container">
   <!-- Header -->
   <div class="header">
     <div class="header-top">
       <div class="welcome-text">স্বাগতম 👋</div>
-      <div class="notification-icon">🔔</div>
+      <div class="notification-icon" (click)="onNotification()">🔔</div>
     </div>
     <div class="profile-section">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Crect width='70' height='70' fill='%23764ba2' rx='20'/%3E%3Ctext x='35' y='35' font-size='28' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3EFA%3C/text%3E%3C/svg%3E" alt="User" class="avatar" />
+      <div class="avatar">
+        <span>FA</span>
+      </div>
       <div class="profile-details">
-        <h2>{{ username }} <span class="verified">✔</span></h2>
-        <div class="user-id">ID: 7371907363</div>
+        <h2>{{ userData.username }} <span class="verified">✔</span></h2>
+        <div class="user-id">ID: {{ userData.userId }}</div>
       </div>
     </div>
   </div>
@@ -17,10 +19,10 @@
   <!-- Balance Card -->
   <div class="balance-card">
     <div class="balance-label">মোট ব্যালেন্স</div>
-    <div class="balance-amount">৳ {{ balance | number:'1.2-2' }}</div>
+    <div class="balance-amount">৳ {{ userData.balance | number:'1.2-2' }}</div>
     <div class="balance-actions">
-      <button class="balance-btn">💳 উইথড্র</button>
-      <button class="balance-btn">📊 ইতিহাস</button>
+      <button class="balance-btn" (click)="onWithdraw()">💳 উইথড্র</button>
+      <button class="balance-btn" (click)="onHistory()">📊 ইতিহাস</button>
     </div>
   </div>
 
@@ -28,25 +30,27 @@
   <div class="stats-grid">
     <div class="stat-box">
       <div class="stat-icon">📺</div>
-      <div class="stat-value">{{ dailyAds }}/{{ dailyAdsLimit }}</div>
+      <div class="stat-value">
+        {{ userData.dailyAds }}/{{ userData.dailyAdsLimit }}
+      </div>
       <div class="stat-label">দৈনিক বিজ্ঞাপন</div>
       <div class="progress-bar">
-        <div class="progress-fill" [style.width]="adsProgress"></div>
+        <div class="progress-fill" [style.width.%]="adsProgressPercentage"></div>
       </div>
     </div>
     <div class="stat-box">
       <div class="stat-icon">👥</div>
-      <div class="stat-value">{{ totalReferrals }}</div>
+      <div class="stat-value">{{ userData.totalReferrals }}</div>
       <div class="stat-label">মোট রেফার</div>
     </div>
     <div class="stat-box">
       <div class="stat-icon">🎯</div>
-      <div class="stat-value">15</div>
+      <div class="stat-value">{{ userData.completedTasks }}</div>
       <div class="stat-label">সম্পূর্ণ টাস্ক</div>
     </div>
     <div class="stat-box">
       <div class="stat-icon">⭐</div>
-      <div class="stat-value">850</div>
+      <div class="stat-value">{{ userData.totalPoints }}</div>
       <div class="stat-label">মোট পয়েন্ট</div>
     </div>
   </div>
@@ -59,7 +63,7 @@
     </div>
     <div class="bonus-badge">💵 প্রতি রেফারে ৳80 বোনাস</div>
     <div class="link-container">
-      <input type="text" class="link-input" readonly [value]="referralLink" />
+      <input type="text" class="link-input" readonly [value]="userData.referralLink" />
       <button class="copy-btn" (click)="copyLink()">📋</button>
     </div>
     <div class="share-buttons">
@@ -68,28 +72,3 @@
     </div>
   </div>
 </div>
-
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-  <div class="nav-item active" (click)="setActiveNav($event,0)">
-    <div class="nav-icon">🏠</div>
-    <span>হোম</span>
-  </div>
-  <div class="nav-item" (click)="setActiveNav($event,1)">
-    <div class="nav-icon">📋</div>
-    <span routerLink="/task">টাস্ক</span>
-  </div>
-
-  <div class="nav-item" (click)="setActiveNav($event,2)">
-    <div class="nav-icon">🎧</div>
-    <span routerLink="/support">সাপোর্ট</span>
-  </div>
-  <div class="nav-item" (click)="setActiveNav($event,3)">
-    <div class="nav-icon">💳</div>
-    <span routerLink="/withdraw">উইথড্র</span>
-  </div>
-  <div class="nav-item" (click)="setActiveNav($event,4)">
-    <div class="nav-icon">👤</div>
-    <span>প্রোফাইল</span>
-  </div>
-</nav>

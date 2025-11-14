@@ -1,7 +1,27 @@
-<a routerLink="home"></a>
-<a routerLink="support"></a>
-<a routerLink="task"></a>
-<a routerLink="withdraw"></a>
+<div class="app-container">
+  <router-outlet></router-outlet>
 
-
-<router-outlet></router-outlet>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item" [class.active]="activeNav === 'home'" (click)="navigateTo('home')">
+      <div class="nav-icon">🏠</div>
+      <span>হোম</span>
+    </div>
+    <div class="nav-item" [class.active]="activeNav === 'task'" (click)="navigateTo('task')">
+      <div class="nav-icon">📋</div>
+      <span>টাস্ক</span>
+    </div>
+    <div class="nav-item" [class.active]="activeNav === 'refer'" (click)="navigateTo('refer')">
+      <div class="nav-icon">👥</div>
+      <span>রেফার</span>
+    </div>
+    <div class="nav-item" [class.active]="activeNav === 'withdraw'" (click)="navigateTo('withdraw')">
+      <div class="nav-icon">💳</div>
+      <span>উইথড্র</span>
+    </div>
+    <div class="nav-item" [class.active]="activeNav === 'profile'" (click)="navigateTo('profile')">
+      <div class="nav-icon">👤</div>
+      <span>প্রোফাইল</span>
+    </div>
+  </nav>
+</div>

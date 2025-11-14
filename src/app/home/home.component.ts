@@ -1,35 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+interface UserData {
+  username: string;
+  userId: string;
+  balance: number;
+  dailyAds: number;
+  dailyAdsLimit: number;
+  totalReferrals: number;
+  completedTasks: number;
+  totalPoints: number;
+  referralLink: string;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  username = 'Fatema Akter';
-  balance = 50.00;
-  dailyAds = 0;
-  dailyAdsLimit = 10;
-  totalReferrals = 0;
-  referralLink = 'https://t.me/cashrainvbot/app?startapp=7371907363';
+export class HomeComponent implements OnInit {
+  userData: UserData = {
+    username: 'Fatema Akter',
+    userId: '7371907363',
+    balance: 50.00,
+    dailyAds: 0,
+    dailyAdsLimit: 10,
+    totalReferrals: 0,
+    completedTasks: 15,
+    totalPoints: 850,
+    referralLink: 'https://t.me/cashrainvbot/app?startapp=7371907363'
+  };
 
-  get adsProgress(): string {
-    return (this.dailyAds / this.dailyAdsLimit * 100) + '%';
+  constructor() { }
+
+  ngOnInit(): void { }
+
+  get adsProgressPercentage(): number {
+    return (this.userData.dailyAds / this.userData.dailyAdsLimit) * 100;
   }
 
-  copyLink() {
-    navigator.clipboard.writeText(this.referralLink)
-      .then(() => alert('✅ লিঙ্ক কপি সম্পন্ন হয়েছে!'))
-      .catch(() => alert('❌ কপি করতে ব্যর্থ হয়েছে'));
+  copyLink(): void {
+    navigator.clipboard.writeText(this.userData.referralLink)
+      .then(() => {
+        alert('✅ লিঙ্ক কপি সম্পন্ন হয়েছে!');
+      })
+      .catch(() => {
+        alert('❌ কপি করতে ব্যর্থ হয়েছে');
+      });
   }
 
-  async shareLink() {
+  async shareLink(): Promise<void> {
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'Cash Rain রেফারাল',
           text: 'আমার রেফারাল লিংক ব্যবহার করে সাইন আপ করুন এবং বোনাস পান!',
-          url: this.referralLink
+          url: this.userData.referralLink
         });
       } catch (err) {
         console.log('Share cancelled');
@@ -38,12 +63,16 @@ export class HomeComponent {
       this.copyLink();
     }
   }
-  
 
-  setActiveNav(event: Event, index: number) {
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => item.classList.remove('active'));
-    (event.currentTarget as HTMLElement).classList.add('active');
+  onWithdraw(): void {
+    console.log('Withdraw clicked');
   }
 
+  onHistory(): void {
+    console.log('History clicked');
+  }
+
+  onNotification(): void {
+    console.log('Notification clicked');
+  }
 }
