@@ -1,18 +1,18 @@
 <div class="refer-page">
   <!-- Confetti Animation -->
   <div class="confetti-container" *ngIf="showConfetti">
-    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"></div>
+    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
   </div>
 
   <!-- Header Section -->
-  <div class="header-section" @fadeIn>
+  <div class="header-section">
     <div class="header-icon">🎉</div>
     <h1>Invite & Earn</h1>
     <p class="subtitle">বন্ধুদের invite করুন এবং প্রতিটি সফল রেফারেলে ৳১০০ টাকা পান!</p>
   </div>
 
   <!-- Stats Cards -->
-  <div class="stats-grid" @fadeIn>
+  <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon">👥</div>
       <div class="stat-content">
@@ -47,7 +47,7 @@
   </div>
 
   <!-- Referral Code Section -->
-  <div class="referral-section" @scaleIn>
+  <div class="referral-section">
     <h2>আপনার রেফারেল কোড</h2>
     <div class="referral-box">
       <div class="code-display">
@@ -62,7 +62,7 @@
   </div>
 
   <!-- Share Section -->
-  <div class="share-section" @fadeIn>
+  <div class="share-section">
     <h2>শেয়ার করুন</h2>
     <div class="share-grid">
       <button
@@ -77,7 +77,7 @@
   </div>
 
   <!-- Rewards Section -->
-  <div class="rewards-section" @fadeIn>
+  <div class="rewards-section">
     <h2>🎁 রিওয়ার্ড মাইলস্টোন</h2>
     <div class="rewards-grid">
       <div class="reward-card" *ngFor="let reward of rewards; trackBy: trackByIndex">
@@ -92,10 +92,10 @@
   </div>
 
   <!-- Referral History -->
-  <div class="history-section" @slideIn>
+  <div class="history-section">
     <div class="section-header">
       <h2>সাম্প্রতিক রেফারেল</h2>
-      <a href="#" class="view-all">সব দেখুন →</a>
+      <a href="javascript:void(0)" class="view-all">সব দেখুন →</a>
     </div>
 
     <div class="history-list">
@@ -118,7 +118,7 @@
   </div>
 
   <!-- How It Works -->
-  <div class="how-it-works" @fadeIn>
+  <div class="how-it-works">
     <h2>কিভাবে কাজ করে?</h2>
     <div class="steps-grid">
       <div class="step">

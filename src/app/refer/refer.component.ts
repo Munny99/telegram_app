@@ -8,97 +8,172 @@ interface ReferralStats {
   pendingEarnings: number;
 }
 
-interface ReferralHistory {
+interface ShareOption {
+  name: string;
+  icon: string;
+  color: string;
+  action: string;
+}
+
+interface Reward {
+  icon: string;
+  title: string;
+  description: string;
+  amount: number;
+}
+
+interface ReferralHistoryItem {
   name: string;
   date: Date;
   status: 'active' | 'pending' | 'inactive';
   earnings: number;
 }
-
 @Component({
   selector: 'app-refer',
   templateUrl: './refer.component.html',
   styleUrl: './refer.component.scss'
 })
 export class ReferComponent {
- referralCode: string = 'REF2024XYZ';
-  copied: boolean = false;
-  showConfetti: boolean = false;
+  showConfetti = false;
+  copied = false;
+  referralCode = 'REF2024XYZ';
 
   stats: ReferralStats = {
     totalReferrals: 15,
     activeReferrals: 12,
-    totalEarnings: 1250.50,
-    pendingEarnings: 350.00
+    totalEarnings: 1200,
+    pendingEarnings: 300
   };
 
-  referralHistory: ReferralHistory[] = [
-    { name: 'রহিম আহমেদ', date: new Date('2024-11-10'), status: 'active', earnings: 100 },
-    { name: 'করিম হোসেন', date: new Date('2024-11-08'), status: 'active', earnings: 100 },
-    { name: 'সালমা খাতুন', date: new Date('2024-11-05'), status: 'pending', earnings: 50 },
-    { name: 'নাজমুল ইসলাম', date: new Date('2024-11-01'), status: 'active', earnings: 100 }
+  shareOptions: ShareOption[] = [
+    { name: 'WhatsApp', icon: '💬', color: '#25D366', action: 'whatsapp' },
+    { name: 'Facebook', icon: '📘', color: '#1877F2', action: 'facebook' },
+    { name: 'Messenger', icon: '💬', color: '#0084FF', action: 'messenger' },
+    { name: 'SMS', icon: '📱', color: '#34C759', action: 'sms' },
+    { name: 'Email', icon: '📧', color: '#FF9500', action: 'email' },
+    { name: 'Copy Link', icon: '🔗', color: '#8E8E93', action: 'copy' }
   ];
 
-  rewards = [
-    { icon: '🎁', title: 'প্রথম রেফারেল', amount: 100, description: 'প্রথম বন্ধু join করলে' },
-    { icon: '🏆', title: '৫টি রেফারেল', amount: 500, description: '৫ জন active user' },
-    { icon: '💎', title: '১০টি রেফারেল', amount: 1500, description: '১০ জন active user' },
-    { icon: '👑', title: 'টপ রেফারার', amount: 5000, description: 'মাসিক সেরা রেফারার' }
-  ];
-
-  shareOptions = [
+  rewards: Reward[] = [
     {
-      name: 'Telegram',
-      icon: '📱',
-      color: '#0088cc',
-      url: () => `https://t.me/share/url?url=${encodeURIComponent('https://yourapp.com')}&text=${encodeURIComponent(`আমার রেফারেল কোড ব্যবহার করুন: ${this.referralCode}`)}`
+      icon: '🥉',
+      title: '৫ জন রেফার',
+      description: 'প্রথম মাইলস্টোন বোনাস',
+      amount: 100
     },
     {
-      name: 'WhatsApp',
-      icon: '💬',
-      color: '#25D366',
-      url: () => `https://wa.me/?text=${encodeURIComponent(`আমার রেফারেল কোড: ${this.referralCode} - https://yourapp.com`)}`
+      icon: '🥈',
+      title: '১০ জন রেফার',
+      description: 'সিলভার মাইলস্টোন বোনাস',
+      amount: 250
     },
     {
-      name: 'Facebook',
-      icon: '👥',
-      color: '#1877f2',
-      url: () => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://yourapp.com')}`
+      icon: '🥇',
+      title: '২৫ জন রেফার',
+      description: 'গোল্ড মাইলস্টোন বোনাস',
+      amount: 500
     },
     {
-      name: 'Email',
-      icon: '📧',
-      color: '#EA4335',
-      url: () => `mailto:?subject=${encodeURIComponent('Join App')}&body=${encodeURIComponent(`আমার রেফারেল কোড ব্যবহার করুন: ${this.referralCode}\nhttps://yourapp.com`)}`
+      icon: '💎',
+      title: '৫০ জন রেফার',
+      description: 'ডায়মন্ড মাইলস্টোন বোনাস',
+      amount: 1000
     }
   ];
 
+  referralHistory: ReferralHistoryItem[] = [
+    { name: 'রহিম আহমেদ', date: new Date('2024-01-15'), status: 'active', earnings: 100 },
+    { name: 'করিম হোসেন', date: new Date('2024-01-14'), status: 'active', earnings: 100 },
+    { name: 'সালমা বেগম', date: new Date('2024-01-13'), status: 'pending', earnings: 0 },
+    { name: 'নাসরিন আক্তার', date: new Date('2024-01-12'), status: 'active', earnings: 100 },
+    { name: 'জামাল উদ্দিন', date: new Date('2024-01-11'), status: 'inactive', earnings: 0 }
+  ];
+
   ngOnInit(): void {
-    this.animateCounters();
+    // Component initialization
   }
 
   copyReferral(): void {
-    navigator.clipboard.writeText(this.referralCode).then(() => {
-      this.copied = true;
-      this.showConfetti = true;
+    const referralLink = `https://yourapp.com/ref/${this.referralCode}`;
 
-      setTimeout(() => {
-        this.copied = false;
-      }, 2000);
-
-      setTimeout(() => {
-        this.showConfetti = false;
-      }, 3000);
-    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(referralLink).then(() => {
+        this.showCopiedState();
+      }).catch(() => {
+        this.fallbackCopy(referralLink);
+      });
+    } else {
+      this.fallbackCopy(referralLink);
+    }
   }
 
-  shareVia(option: any): void {
-    window.open(option.url(), '_blank');
+  private fallbackCopy(text: string): void {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      this.showCopiedState();
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+    }
+
+    document.body.removeChild(textArea);
   }
 
-  animateCounters(): void {
-    // Counter animation can be implemented with a library or custom logic
-    // This is a placeholder for the animation trigger
+  private showCopiedState(): void {
+    this.copied = true;
+    this.showConfetti = true;
+
+    setTimeout(() => {
+      this.copied = false;
+    }, 2000);
+
+    setTimeout(() => {
+      this.showConfetti = false;
+    }, 3000);
+  }
+
+  shareVia(option: ShareOption): void {
+    const referralLink = `https://yourapp.com/ref/${this.referralCode}`;
+    const message = `আমার রেফারেল কোড ব্যবহার করুন: ${this.referralCode} এবং ৳১০০ টাকা পান! ${referralLink}`;
+
+    switch (option.action) {
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        break;
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`, '_blank');
+        break;
+      case 'messenger':
+        window.open(`fb-messenger://share/?link=${encodeURIComponent(referralLink)}`, '_blank');
+        break;
+      case 'sms':
+        window.open(`sms:?body=${encodeURIComponent(message)}`);
+        break;
+      case 'email':
+        window.open(`mailto:?subject=Referral Code&body=${encodeURIComponent(message)}`);
+        break;
+      case 'copy':
+        this.copyReferral();
+        break;
+    }
+  }
+
+  formatDate(date: Date): string {
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return 'আজ';
+    if (diffDays === 1) return 'গতকাল';
+    if (diffDays < 7) return `${diffDays} দিন আগে`;
+
+    return date.toLocaleDateString('bn-BD');
   }
 
   getStatusClass(status: string): string {
@@ -112,15 +187,6 @@ export class ReferComponent {
       'inactive': 'নিষ্ক্রিয়'
     };
     return statusMap[status] || status;
-  }
-
-  formatDate(date: Date): string {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    };
-    return date.toLocaleDateString('bn-BD', options);
   }
 
   trackByIndex(index: number): number {
