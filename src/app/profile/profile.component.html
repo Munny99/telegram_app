@@ -1,0 +1,129 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="cover-photo"></div>
+
+    <div class="profile-content">
+      <div class="avatar-section">
+        <img
+          [src]="isEditing ? editedProfile.avatar : profile.avatar"
+          [alt]="profile.name"
+          class="avatar"
+        />
+        <input
+          *ngIf="isEditing"
+          type="file"
+          id="avatarInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          style="display: none"
+        />
+        <label *ngIf="isEditing" for="avatarInput" class="change-avatar-btn">
+          <i class="camera-icon">📷</i>
+        </label>
+      </div>
+
+      <div class="profile-info">
+        <div class="info-header">
+          <div>
+            <h1 *ngIf="!isEditing">{{ profile.name }}</h1>
+            <input *ngIf="isEditing" class="edit-input" placeholder="Name" />
+
+            <p class="email" *ngIf="!isEditing">{{ profile.email }}</p>
+            <input *ngIf="isEditing" class="edit-input" placeholder="Email" />
+          </div>
+
+          <div class="action-buttons" *ngIf="!isEditing">
+            <button class="btn btn-primary" (click)="toggleEdit()">
+              Edit Profile
+            </button>
+            <button class="btn btn-secondary">Share</button>
+          </div>
+
+          <div class="action-buttons" *ngIf="isEditing">
+            <button class="btn btn-primary" (click)="saveProfile()">
+              Save
+            </button>
+            <button class="btn btn-secondary" (click)="cancelEdit()">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-section">
+          <div class="stat-item" *ngFor="let stat of stats">
+            <span class="stat-value"
+              >{{ stat.value }}{{ stat.value > 100 ? "" : "k" }}</span
+            >
+            <span class="stat-label">{{ stat.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-details">
+    <div class="details-card">
+      <h2>About</h2>
+      <p *ngIf="!isEditing" class="bio">{{ profile.bio }}</p>
+      <textarea
+        *ngIf="isEditing"
+        class="edit-textarea"
+        rows="4"
+        placeholder="Tell us about yourself"
+      ></textarea>
+
+      <div class="detail-items">
+        <div class="detail-item">
+          <span class="icon">📍</span>
+          <div>
+            <label>Location</label>
+            <p *ngIf="!isEditing">{{ profile.location }}</p>
+            <input
+              *ngIf="isEditing"
+              class="edit-input-small"
+              placeholder="Location"
+            />
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="icon">📞</span>
+          <div>
+            <label>Phone</label>
+            <p *ngIf="!isEditing">{{ profile.phone }}</p>
+            <input
+              *ngIf="isEditing"
+              class="edit-input-small"
+              placeholder="Phone"
+            />
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="icon">🌐</span>
+          <div>
+            <label>Website</label>
+            <p *ngIf="!isEditing">
+              <a [href]="profile.website" target="_blank">{{
+                profile.website
+              }}</a>
+            </p>
+            <input
+              *ngIf="isEditing"
+              class="edit-input-small"
+              placeholder="Website"
+            />
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="icon">📅</span>
+          <div>
+            <label>Member Since</label>
+            <p>{{ profile.joinDate | date : "MMMM yyyy" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

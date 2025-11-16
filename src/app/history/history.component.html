@@ -1,0 +1,158 @@
+<div class="history-page">
+  <!-- Header -->
+  <div class="page-header">
+    <button class="back-button" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <h1 class="page-title">উত্তোলন ইতিহাস</h1>
+    <button class="filter-button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-section">
+    <div class="summary-card total">
+      <div class="summary-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="12" y1="1" x2="12" y2="23"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      </div>
+      <div class="summary-content">
+        <p class="summary-label">মোট উত্তোলন</p>
+        <p class="summary-value">৳{{ totalWithdrawn }}</p>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card pending">
+        <div class="summary-mini-icon">⏳</div>
+        <p class="summary-mini-label">অপেক্ষমাণ</p>
+        <p class="summary-mini-value">{{ pendingCount }}</p>
+      </div>
+      <div class="summary-card completed">
+        <div class="summary-mini-icon">✅</div>
+        <p class="summary-mini-label">সম্পন্ন</p>
+        <p class="summary-mini-value">{{ completedCount }}</p>
+      </div>
+      <div class="summary-card rejected">
+        <div class="summary-mini-icon">❌</div>
+        <p class="summary-mini-label">প্রত্যাখ্যাত</p>
+        <p class="summary-mini-value">{{ rejectedCount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button
+      *ngFor="let tab of filterTabs"
+      [class.active]="activeFilter === tab.value"
+      (click)="setFilter(tab.value)"
+      class="filter-tab">
+      {{ tab.label }}
+    </button>
+  </div>
+
+  <!-- History List -->
+  <div class="history-list">
+    <div *ngFor="let withdrawal of filteredWithdrawals; trackBy: trackByIndex" class="history-card">
+      <div class="history-header">
+        <div class="history-method">
+          <div [class]="'method-icon ' + getMethodClass(withdrawal.method)">
+            <svg *ngIf="withdrawal.method === 'bKash'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            <svg *ngIf="withdrawal.method === 'Nagad'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <svg *ngIf="withdrawal.method === 'Rocket'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+            </svg>
+          </div>
+          <div class="method-details">
+            <p class="method-name">{{ withdrawal.method }}</p>
+            <p class="method-number">{{ withdrawal.accountNumber }}</p>
+          </div>
+        </div>
+        <span [class]="'status-badge ' + withdrawal.status">
+          {{ getStatusText(withdrawal.status) }}
+        </span>
+      </div>
+
+      <div class="history-body">
+        <div class="history-info-grid">
+          <div class="info-item">
+            <p class="info-label">পরিমাণ</p>
+            <p class="info-value amount">৳{{ withdrawal.amount }}</p>
+          </div>
+          <div class="info-item">
+            <p class="info-label">তারিখ</p>
+            <p class="info-value">{{ formatDate(withdrawal.date) }}</p>
+          </div>
+          <div class="info-item">
+            <p class="info-label">লেনদেন ID</p>
+            <p class="info-value transaction-id">{{ withdrawal.transactionId }}</p>
+          </div>
+          <div class="info-item">
+            <p class="info-label">সময়</p>
+            <p class="info-value">{{ formatTime(withdrawal.date) }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="withdrawal.note" class="history-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <p>{{ withdrawal.note }}</p>
+        </div>
+      </div>
+
+      <div class="history-footer">
+        <button class="details-button" (click)="viewDetails(withdrawal)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          বিস্তারিত দেখুন
+        </button>
+        <button *ngIf="withdrawal.status === 'completed'" class="receipt-button" (click)="downloadReceipt(withdrawal)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          রসিদ ডাউনলোড
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredWithdrawals.length === 0" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3 class="empty-title">কোন লেনদেন নেই</h3>
+      <p class="empty-text">এই ক্যাটাগরিতে কোন উত্তোলনের তথ্য পাওয়া যায়নি</p>
+    </div>
+  </div>
+
+  <!-- Load More -->
+  <div *ngIf="hasMore" class="load-more-section">
+    <button class="load-more-button" (click)="loadMore()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+      আরো লোড করুন
+    </button>
+  </div>
+</div>

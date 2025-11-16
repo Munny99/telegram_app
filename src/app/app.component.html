@@ -1,0 +1,35 @@
+<div class="app-container">
+  <router-outlet></router-outlet>
+  <br>
+  <br>
+  <br>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item" [class.active]="activeNav === 'home'" (click)="navigateTo('home')">
+      <div class="nav-icon">🏡</div>
+      <span>হোম</span>
+    </div>
+
+    <div class="nav-item" [class.active]="activeNav === 'task'" (click)="navigateTo('task')">
+      <div class="nav-icon">📝</div>
+      <span>টাস্ক</span>
+    </div>
+
+    <div class="nav-item" [class.active]="activeNav === 'refer'" (click)="navigateTo('refer')">
+      <div class="nav-icon">🔗</div>
+      <span>রেফার</span>
+    </div>
+
+    <div class="nav-item" [class.active]="activeNav === 'withdraw'" (click)="navigateTo('withdraw')">
+      <div class="nav-icon">💰</div>
+      <span>উইথড্র</span>
+    </div>
+
+    <div class="nav-item" [class.active]="activeNav === 'history'" (click)="navigateTo('history')">
+      <div class="nav-icon">🕓</div>
+      <span>হিস্টোরি</span>
+    </div>
+
+  </nav>
+</div>

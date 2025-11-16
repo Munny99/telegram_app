@@ -1,0 +1,150 @@
+<div class="min-h-screen bg-dark text-white">
+  <!-- Header -->
+  <!-- <header class="header">
+    <div class="header-content">
+      <div class="profile-section">
+        <div class="icon-box">
+          <i class="bi bi-camera-video-fill"></i>
+        </div>
+        <div>
+          <h1 class="user-name">Fatema Akter</h1>
+          <div class="verified">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>Verified Expert</span>
+          </div>
+        </div>
+      </div>
+      <div class="balance-badge">
+        <span>💰</span>
+        <span>50.00 TAKA</span>
+      </div>
+    </div>
+  </header> -->
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="card">
+        <div class="icon blue"><i class="bi bi-star-fill"></i></div>
+        <div>
+          <p class="value">4.9</p>
+          <p class="label">Rating</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon purple"><i class="bi bi-camera-reels-fill"></i></div>
+        <div>
+          <p class="value">500+</p>
+          <p class="label">Sessions</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon green"><i class="bi bi-award-fill"></i></div>
+        <div>
+          <p class="value">Top 10</p>
+          <p class="label">Expert</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call History -->
+    <div class="call-history">
+      <div class="call-header">
+        <h2>দৈনিক টাস্ক অগ্রগতি</h2>
+        <span>0 / 15</span>
+      </div>
+      <div class="call-box">
+        <i class="bi bi-clock-history"></i>
+        <p>আজ ১টি টাস্ক বাকি আছে</p>
+      </div>
+    </div>
+
+    <!-- Main Call Card -->
+    <div class="call-card">
+      <div class="content">
+        <div class="circle">
+          <i class="bi bi-camera-video-fill"></i>
+        </div>
+        <h2>বিজ্ঞাপন দেখুন</h2>
+        <p>প্রতি বিজ্ঞাপন দেখে 50.00 TAKA আয় করুন</p>
+        <div class="earning">
+          <span>💵 রিওয়ার্ড:</span>
+          <strong>50.00 TAKA</strong>
+        </div>
+        <button class="main-btn">
+          <i class="bi bi-telephone-fill"></i> বিজ্ঞাপন দেখুন
+        </button>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <!-- <div class="features">
+      <div class="feature">
+        <div class="feature-icon blue"><i class="bi bi-camera-video"></i></div>
+        <h3>HD Video Quality</h3>
+        <p>Crystal clear video calls with stable connection</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon purple"><i class="bi bi-clock-history"></i></div>
+        <h3>24/7 Availability</h3>
+        <p>Connect anytime, anywhere at your convenience</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon green"><i class="bi bi-cash-stack"></i></div>
+        <h3>Instant Earnings</h3>
+        <p>Get paid immediately after each session</p>
+      </div>
+    </div> -->
+
+    <!-- Telegram Channels -->
+    <div class="telegram-section">
+      <div *ngFor="let channel of telegramChannels; let i = index" class="telegram-card">
+        <div class="telegram-content">
+          <div class="telegram-icon">
+            <i class="bi bi-telegram"></i>
+          </div>
+
+          <h3>টেলিগ্রাম চ্যানেল জয়েন দিন</h3>
+          <p>চ্যানেলে জয়েন করুন তারপর <br />চেক ও ক্লেইম বাটনে ক্লিক করুন</p>
+
+          <div class="reward">
+            <span>🎁</span>
+            <span>রিওয়ার্ড: 200.00 TAKA</span>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-secondary">
+              <i class="bi bi-box-arrow-up-right"></i> চ্যানেল প্রবেশ
+            </button>
+            <button class="btn-primary">
+              <i class="bi bi-patch-check-fill"></i> চেক ও ক্লেইম
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+    <!-- Stats -->
+  <div class="task-card">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-clock text-sky-400 text-2xl"></i>
+        <div>
+          <p class="text-sky-200 text-sm">আজকে সম্পন্ন</p>
+          <p class="text-2xl font-bold">{{ totalCompleted }} টাস্ক</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-sky-200 text-sm">মোট আয়</p>
+        <p class="text-2xl font-bold text-green-400">{{ totalEarnings }} ৳</p>
+      </div>
+    </div>
+  </div>
+</div>

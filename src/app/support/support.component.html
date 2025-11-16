@@ -1,0 +1,120 @@
+<div class="tutorial-service">
+  <!-- Animated Background -->
+  <div class="background">
+    <div class="circle sky"></div>
+    <div class="circle cyan"></div>
+    <div class="circle blue"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="avatar-box">
+      <span class="logo">FM</span>
+    </div>
+    <div class="profile">
+      <div class="name">
+        <h1>Fatema Akter</h1>
+        <span class="verified">✔</span>
+      </div>
+      <div class="balance">
+        <span>৳ 50.00 TAKA 💎</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Support Section -->
+  <section class="support-section">
+    <div class="icon-box">🎧</div>
+    <div class="text">
+      <h2>সাপোর্ট</h2>
+      <p>আপনার সফলতার সঙ্গী</p>
+    </div>
+
+    <!-- Tutorial Video Card -->
+    <div class="video-card">
+      <div class="video-circle">▶</div>
+      <h3>টিউটোরিয়াল ভিডিও</h3>
+      <p>
+        কিভাবে আপনি স্মার্ট কাজ করবেন—টিউটোরিয়াল ভিডিও দেখে নিন এবং সহজেই আয়
+        শুরু করুন। 🚀
+      </p>
+      <button>▶ টিউটোরিয়াল দেখুন</button>
+      <div class="info">🎬 ভিডিও দেখে সব কিছু শিখে নিন</div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="card green">
+      ⭐
+      <div class="value">4.9</div>
+      <small>রেটিং</small>
+    </div>
+    <div class="card blue">
+      🎥
+      <div class="value">50+</div>
+      <small>ভিডিও</small>
+    </div>
+    <div class="card cyan">
+      ⚡
+      <div class="value">24/7</div>
+      <small>সাপোর্ট</small>
+    </div>
+  </div>
+
+  <!-- Offer -->
+  <div class="offer">
+    <div class="icon">🏅</div>
+    <div>
+      <h3>বিশেষ অফার!</h3>
+      <p>আজই শুরু করুন এবং বোনাস পান</p>
+    </div>
+    <div class="growth">📈</div>
+  </div>
+
+  <!-- Quick Help -->
+  <div class="quick-help">
+    <h3>⚡ দ্রুত সাহায্য</h3>
+    <div class="help-list">
+      <div class="help-item">📚 কিভাবে শুরু করবেন</div>
+      <div class="help-item">💬 লাইভ চ্যাট সাপোর্ট</div>
+    </div>
+  </div>
+
+  <!-- Other Help -->
+  <div class="other-help">
+    <h3>🆘 অন্যান্য সাহায্য</h3>
+    <div class="grid">
+      <div class="item">📱 টেলিগ্রাম</div>
+      <div class="item">📧 ইমেইল</div>
+      <div class="item">❓ FAQ</div>
+      <div class="item">💭 লাইভ চ্যাট</div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+ <!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item active" (click)="setActiveNav($event,0)">
+    <div class="nav-icon">🏠</div>
+    <span>হোম</span>
+  </div>
+  <div class="nav-item" (click)="setActiveNav($event,1)">
+    <div class="nav-icon">📋</div>
+    <span routerLink="/task">টাস্ক</span>
+  </div>
+
+  <div class="nav-item" (click)="setActiveNav($event,2)">
+    <div class="nav-icon">🎧</div>
+    <span routerLink="/support">সাপোর্ট</span>
+  </div>
+  <div class="nav-item" (click)="setActiveNav($event,3)">
+    <div class="nav-icon">💳</div>
+    <span routerLink="/withdraw">উইথড্র</span>
+  </div>
+  <div class="nav-item" (click)="setActiveNav($event,4)">
+    <div class="nav-icon">👤</div>
+    <span>প্রোফাইল</span>
+  </div>
+</nav>
+</div>

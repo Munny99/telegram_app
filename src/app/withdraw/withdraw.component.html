@@ -1,0 +1,183 @@
+<div class="container">
+  <div class="wrapper">
+    <!-- Balance Card -->
+    <div class="balance-card">
+      <div class="balance-decorations">
+        <div class="decoration-circle circle-1"></div>
+        <div class="decoration-circle circle-2"></div>
+      </div>
+      <div class="balance-content">
+        <div class="balance-header">
+          <div class="balance-label-wrapper">
+            <svg class="balance-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            <p class="balance-label">আপনার ব্যালেন্স</p>
+          </div>
+          <svg class="shield-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <p class="balance-amount">{{balance}}</p>
+        <p class="balance-currency">TAKA</p>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div *ngFor="let stat of stats" class="stat-card">
+        <div [class]="'stat-icon ' + getStatColorClass(stat.color)">
+          <svg *ngIf="stat.icon === 'trending-up'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+          <svg *ngIf="stat.icon === 'clock'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <svg *ngIf="stat.icon === 'user'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <p class="stat-label">{{stat.label}}</p>
+        <p class="stat-value">{{stat.value}}</p>
+      </div>
+    </div>
+
+    <!-- Withdrawal Form Card -->
+    <div class="form-card">
+      <div class="form-header">
+        <div class="form-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        </div>
+        <h2 class="form-title">টাকা উত্তোলন</h2>
+      </div>
+
+      <!-- Info Box -->
+      <div class="info-box">
+        <div class="info-content">
+          <div class="info-icon">
+            <span class="info-text">i</span>
+          </div>
+          <div class="info-details">
+            <p class="info-label">মূলতম উত্তোলনযোগ্য Amount:</p>
+            <p class="info-amount">{{amount}} TAKA</p>
+          </div>
+        </div>
+        <div class="referral-info">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <p class="referral-text">মূলতম রেফারেল প্রয়োজন: <span class="referral-count">18 জন</span></p>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="form-fields">
+        <!-- Method Selection -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            পদ্ধতি নির্বাচন করুন
+          </label>
+          <div class="select-wrapper">
+            <select  class="form-select">
+              <option *ngFor="let method of withdrawalMethods" [value]="method">
+                {{method}}
+              </option>
+            </select>
+            <svg class="select-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Account Number -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            একাউন্ট নম্বর
+          </label>
+          <input
+            type="text"
+
+            placeholder="01XXXXXXXXX"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Amount -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            Amount (TAKA)
+          </label>
+          <input
+            type="text"
+            [value]="'মূলতম ' + amount + ' TAKA'"
+            readonly
+            class="form-input amount-input"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <button (click)="handleSubmit()" class="submit-button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          রিকোয়েস্ট জমা দিন
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="transactions-card">
+      <div class="transactions-header">
+        <h3 class="transactions-title">Recent Transactions</h3>
+        <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
+      <div class="transactions-list">
+        <div *ngFor="let txn of recentTransactions" class="transaction-item">
+          <div class="transaction-left">
+            <p class="transaction-type">{{txn.type}}</p>
+            <p class="transaction-date">{{txn.date}}</p>
+          </div>
+          <div class="transaction-right">
+            <p class="transaction-amount">{{txn.amount}}</p>
+            <span [class]="'transaction-status ' + getStatusClass(txn.status)">
+              {{txn.status}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-content">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <p class="footer-text">সকল লেনদেন নিরাপদ এবং এনক্রিপ্টেড</p>
+      </div>
+    </div>
+  </div>
+</div>
