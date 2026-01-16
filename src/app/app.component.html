@@ -1,35 +1,74 @@
-<div class="app-container">
-  <router-outlet></router-outlet>
-  <br>
-  <br>
-  <br>
+<div class="app-wrapper">
+  <!-- Loading Screen -->
+  <div class="loading-screen" *ngIf="loading">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p>টেলিগ্রামের সাথে সংযুক্ত হচ্ছে...</p>
+    </div>
+  </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <div class="nav-item" [class.active]="activeNav === 'home'" (click)="navigateTo('home')">
-      <div class="nav-icon">🏡</div>
-      <span>হোম</span>
+  <!-- Error Screen -->
+  <div class="error-screen" *ngIf="!loading && error">
+    <div class="error-content">
+      <div class="error-icon">⚠️</div>
+      <h2>প্রমাণীকরণ ত্রুটি</h2>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="retryAuth()">
+        <i class="bi bi-arrow-clockwise"></i> আবার চেষ্টা করুন
+      </button>
+    </div>
+  </div>
+
+  <!-- Main App Content (After Authentication) -->
+  <div class="app-container" *ngIf="!loading && !error && authenticated">
+
+    <!-- Router Outlet - Display current route -->
+    <div class="content-area">
+      <router-outlet></router-outlet>
     </div>
 
-    <div class="nav-item" [class.active]="activeNav === 'task'" (click)="navigateTo('task')">
-      <div class="nav-icon">📝</div>
-      <span>টাস্ক</span>
-    </div>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button
+        class="nav-item"
+        [class.active]="activeNav === 'home'"
+        (click)="navigateTo('home')">
+        <i class="bi bi-house-door-fill"></i>
+        <span>হোম</span>
+      </button>
 
-    <div class="nav-item" [class.active]="activeNav === 'refer'" (click)="navigateTo('refer')">
-      <div class="nav-icon">🔗</div>
-      <span>রেফার</span>
-    </div>
+      <button
+        class="nav-item"
+        [class.active]="activeNav === 'task'"
+        (click)="navigateTo('task')">
+        <i class="bi bi-list-task"></i>
+        <span>টাস্ক</span>
+      </button>
 
-    <div class="nav-item" [class.active]="activeNav === 'withdraw'" (click)="navigateTo('withdraw')">
-      <div class="nav-icon">💰</div>
-      <span>উইথড্র</span>
-    </div>
+      <button
+        class="nav-item"
+        [class.active]="activeNav === 'referral'"
+        (click)="navigateTo('referral')">
+        <i class="bi bi-people-fill"></i>
+        <span>রেফার</span>
+      </button>
 
-    <div class="nav-item" [class.active]="activeNav === 'history'" (click)="navigateTo('history')">
-      <div class="nav-icon">🕓</div>
-      <span>হিস্টোরি</span>
-    </div>
+      <button
+        class="nav-item"
+        [class.active]="activeNav === 'wallet'"
+        (click)="navigateTo('wallet')">
+        <i class="bi bi-wallet2"></i>
+        <span>ওয়ালেট</span>
+      </button>
 
-  </nav>
+      <button
+        class="nav-item"
+        [class.active]="activeNav === 'profile'"
+        (click)="navigateTo('profile')">
+        <i class="bi bi-person-fill"></i>
+        <span>প্রোফাইল</span>
+      </button>
+    </nav>
+
+  </div>
 </div>

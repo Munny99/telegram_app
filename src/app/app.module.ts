@@ -10,6 +10,7 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { ReferComponent } from './refer/refer.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HistoryComponent } from './history/history.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HistoryComponent } from './history/history.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()

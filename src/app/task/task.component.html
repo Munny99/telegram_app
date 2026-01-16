@@ -4,104 +4,190 @@
   <main class="main-content">
 
     <!-- Stats Cards -->
-    <div class="stats-grid">
+    <div class="stats-grid" *ngIf="user">
       <div class="card">
         <div class="icon blue"><i class="bi bi-star-fill"></i></div>
         <div>
-          <p class="value">4.9</p>
-          <p class="label">Rating</p>
+          <p class="value">{{ userRating }}</p>
+          <p class="label">রেটিং</p>
         </div>
       </div>
 
       <div class="card">
         <div class="icon purple"><i class="bi bi-camera-reels-fill"></i></div>
         <div>
-          <p class="value">500+</p>
-          <p class="label">Sessions</p>
+          <p class="value">{{ userSessions }}+</p>
+          <p class="label">সেশন</p>
         </div>
       </div>
 
       <div class="card">
         <div class="icon green"><i class="bi bi-award-fill"></i></div>
         <div>
-          <p class="value">Top 10</p>
-          <p class="label">Expert</p>
+          <p class="value">টপ {{ user.rating }}</p>
+          <p class="label">এক্সপার্ট</p>
         </div>
       </div>
     </div>
 
-    <!-- Call History -->
+    <!-- Error Message -->
+    <div class="error-alert" *ngIf="errorMessage">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-box" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>লোড হচ্ছে...</p>
+    </div>
+
+    <!-- Daily Task Progress -->
     <div class="call-history">
       <div class="call-header">
         <h2>দৈনিক টাস্ক অগ্রগতি</h2>
-        <span>0 / 15</span>
+        <span>{{ dailyTasksCompleted }} / {{ dailyTaskLimit }}</span>
       </div>
       <div class="call-box">
         <i class="bi bi-clock-history"></i>
-        <p>আজ ১টি টাস্ক বাকি আছে</p>
+        <p>আজ {{ dailyTaskLimit - dailyTasksCompleted }}টি টাস্ক বাকি আছে</p>
       </div>
     </div>
 
-    <!-- Main Call Card -->
-    <div class="call-card">
-      <div class="content">
+    <!-- Video Ad Task (First available custom link task) -->
+    <div class="call-card" *ngIf="videoAdTasks.length > 0">
+      <div class="content" *ngFor="let task of videoAdTasks.slice(0, 1)">
         <div class="circle">
           <i class="bi bi-camera-video-fill"></i>
         </div>
-        <h2>বিজ্ঞাপন দেখুন</h2>
-        <p>প্রতি বিজ্ঞাপন দেখে 50.00 TAKA আয় করুন</p>
+        <h2>{{ task.taskTitle }}</h2>
+        <p>{{ task.taskDescription }}</p>
         <div class="earning">
           <span>💵 রিওয়ার্ড:</span>
-          <strong>50.00 TAKA</strong>
+          <strong>{{ task.rewardAmount.toFixed(2) }} TAKA</strong>
         </div>
-        <button class="main-btn">
-          <i class="bi bi-telephone-fill"></i> বিজ্ঞাপন দেখুন
+        <button
+          class="main-btn"
+          (click)="startTask(task)"
+          [disabled]="isProcessing(task.id)">
+          <i class="bi bi-play-circle-fill"></i>
+          {{ isProcessing(task.id) ? 'প্রসেসিং...' : 'বিজ্ঞাপন দেখুন' }}
+        </button>
+        <button
+          class="verify-btn"
+          (click)="verifyTask(task)"
+          [disabled]="isProcessing(task.id)">
+          <i class="bi bi-patch-check-fill"></i>
+          {{ isProcessing(task.id) ? 'যাচাই করা হচ্ছে...' : 'চেক ও ক্লেইম' }}
         </button>
       </div>
     </div>
+
     <!-- Telegram Channels -->
     <div class="telegram-section">
-      <div *ngFor="let channel of telegramChannels; let i = index" class="telegram-card">
+      <div *ngFor="let task of telegramTasks; trackBy: trackByTaskId" class="telegram-card">
         <div class="telegram-content">
           <div class="telegram-icon">
             <i class="bi bi-telegram"></i>
           </div>
 
-          <h3>টেলিগ্রাম চ্যানেল জয়েন দিন</h3>
-          <p>চ্যানেলে জয়েন করুন তারপর <br />চেক ও ক্লেইম বাটনে ক্লিক করুন</p>
+          <h3>{{ task.taskTitle }}</h3>
+          <p>{{ task.taskDescription }}</p>
 
           <div class="reward">
             <span>🎁</span>
-            <span>রিওয়ার্ড: 200.00 TAKA</span>
+            <span>রিওয়ার্ড: {{ task.rewardAmount.toFixed(2) }} TAKA</span>
+          </div>
+
+          <div class="verification-badge" *ngIf="task.requiresVerification">
+            <i class="bi bi-shield-check"></i> স্বয়ংক্রিয় যাচাইকরণ
           </div>
 
           <div class="button-group">
-            <button class="btn-secondary">
-              <i class="bi bi-box-arrow-up-right"></i> চ্যানেল প্রবেশ
+            <button
+              class="btn-secondary"
+              (click)="startTask(task)"
+              [disabled]="isProcessing(task.id)">
+              <i class="bi bi-box-arrow-up-right"></i>
+              {{ isProcessing(task.id) ? 'খোলা হচ্ছে...' : 'চ্যানেল প্রবেশ' }}
             </button>
-            <button class="btn-primary">
-              <i class="bi bi-patch-check-fill"></i> চেক ও ক্লেইম
+            <button
+              class="btn-primary"
+              (click)="verifyTask(task)"
+              [disabled]="isProcessing(task.id)">
+              <i class="bi bi-patch-check-fill"></i>
+              {{ isProcessing(task.id) ? 'যাচাই হচ্ছে...' : 'চেক ও ক্লেইম' }}
             </button>
           </div>
         </div>
       </div>
-    </div>
-  </main>
 
-    <!-- Stats -->
-  <div class="task-card">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <i class="fa-solid fa-clock text-sky-400 text-2xl"></i>
-        <div>
-          <p class="text-sky-200 text-sm">আজকে সম্পন্ন</p>
-          <p class="text-2xl font-bold">{{ totalCompleted }} টাস্ক</p>
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="!loading && telegramTasks.length === 0">
+        <i class="bi bi-inbox"></i>
+        <p>কোন টেলিগ্রাম টাস্ক উপলব্ধ নেই</p>
+      </div>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="task-card" *ngIf="user">
+      <div class="stats-summary">
+        <div class="stat-item">
+          <i class="bi bi-clock-history text-sky-400"></i>
+          <div>
+            <p class="stat-label">আজকে সম্পন্ন</p>
+            <p class="stat-value">{{ dailyTasksCompleted }} টাস্ক</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <i class="bi bi-cash-coin text-green-400"></i>
+          <div>
+            <p class="stat-label">মোট আয়</p>
+            <p class="stat-value earnings">{{ pendingBalance }} ৳</p>
+          </div>
         </div>
       </div>
-      <div class="text-right">
-        <p class="text-sky-200 text-sm">মোট আয়</p>
-        <p class="text-2xl font-bold text-green-400">{{ totalEarnings }} ৳</p>
+    </div>
+
+    <!-- Referral Section -->
+    <div class="referral-section" *ngIf="user">
+      <div class="referral-card-bangla">
+        <h3>📣 বন্ধুদের আমন্ত্রণ জানান</h3>
+        <p>আপনার রেফারেল কোড শেয়ার করুন এবং পুরস্কার অর্জন করুন!</p>
+        <div class="referral-code-box">
+          <span class="referral-code">{{ user.referralCode }}</span>
+          <button class="btn-share" (click)="shareReferral()">
+            <i class="bi bi-share-fill"></i> শেয়ার করুন
+          </button>
+        </div>
+        <div class="referral-stats">
+          <div class="ref-stat">
+            <span class="ref-count">{{ user.totalReferrals }}</span>
+            <span class="ref-label">রেফারেল</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- Completed Tasks -->
+    <div class="completed-section" *ngIf="completedTasks.length > 0">
+      <h2 class="section-title">
+        <i class="bi bi-check-circle-fill"></i> সম্পন্ন টাস্ক
+      </h2>
+      <div class="completed-list">
+        <div *ngFor="let task of completedTasks; trackBy: trackByTaskId" class="completed-item">
+          <div class="completed-icon">
+            <i [class]="getTaskIcon(task.taskType)"></i>
+          </div>
+          <div class="completed-info">
+            <h4>{{ task.taskTitle }}</h4>
+            <span class="completed-reward">+{{ task.rewardAmount.toFixed(2) }} TAKA</span>
+          </div>
+          <i class="bi bi-check-circle-fill completed-check"></i>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
 </div>
